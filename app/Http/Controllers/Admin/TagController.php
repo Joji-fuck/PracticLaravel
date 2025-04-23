@@ -3,20 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
-
-
-class CategoryController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categories = Category::paginate(2);
-        return view('admin.categories.index', compact('categories'));
+        $tags = Tag::paginate(2);
+        return view('admin.tags.index', compact('tags'));
     }
 
     /**
@@ -24,7 +22,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        return view('admin.tags.create');
     }
 
     /**
@@ -35,11 +33,10 @@ class CategoryController extends Controller
         $request->validate([
             'title'=>'required',
         ]);
-        Category::create([
+        Tag::create([
             'title'=>$request->title,
         ]);
-        return redirect()->route('categories.index')->with('success',' Категория добавлена');
-
+        return redirect()->route('tags.index')->with('success',' Тег добавлен');
     }
 
     /**
@@ -55,30 +52,30 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $category = Category::findOrFail($id);
-        return view('admin.categories.edit', compact('category'));
+        $tag = Tag::findOrFail($id);
+        return view('admin.categories.edit', compact('tag'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Tag $tag)
     {
         $request->validate([
             'title' => 'required|string|max:255',
         ]);
 
-        $category->update($request->all());
+        $tag->update($request->all());
 
-        return redirect()->route('categories.index')->with('success', 'Категория обновлена!');
+        return redirect()->route('tags.index')->with('success', 'Тег обновлен!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
-        Category::destroy($id);
-        return redirect()->route('categories.index')->with('success', 'Категория удалена!');
+        Tag::destroy($id);
+        return redirect()->route('tags.index');
     }
 }
