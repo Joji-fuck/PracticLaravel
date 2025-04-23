@@ -26,73 +26,50 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Bordered Table</h3>
+                <h3 class="card-title">Категории</h3>
+                  <form action="{{route('categories.create')}}" method="GET">
+                      @csrf
+                      <button type="submit" class="btn btn-block bg-success">Создание новой категории</button>
+                  </form>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <table class="table table-bordered">
+                    @extends('components.alerts')
                   <thead>
                     <tr>
-                      <th style="width: 10px">#</th>
-                      <th>Task</th>
-                      <th>Progress</th>
-                      <th style="width: 40px">Label</th>
+                      <th style="width: 10px">ID</th>
+                      <th>Title</th>
+                      <th>Slug</th>
+                      <th style="width: 40px">action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1.</td>
-                      <td>Update software</td>
-                      <td>
-                        <div class="progress progress-xs">
-                          <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                        </div>
-                      </td>
-                      <td><span class="badge bg-danger">55%</span></td>
-                    </tr>
-                    <tr>
-                      <td>2.</td>
-                      <td>Clean database</td>
-                      <td>
-                        <div class="progress progress-xs">
-                          <div class="progress-bar bg-warning" style="width: 70%"></div>
-                        </div>
-                      </td>
-                      <td><span class="badge bg-warning">70%</span></td>
-                    </tr>
-                    <tr>
-                      <td>3.</td>
-                      <td>Cron job running</td>
-                      <td>
-                        <div class="progress progress-xs progress-striped active">
-                          <div class="progress-bar bg-primary" style="width: 30%"></div>
-                        </div>
-                      </td>
-                      <td><span class="badge bg-primary">30%</span></td>
-                    </tr>
-                    <tr>
-                      <td>4.</td>
-                      <td>Fix and squish bugs</td>
-                      <td>
-                        <div class="progress progress-xs progress-striped active">
-                          <div class="progress-bar bg-success" style="width: 90%"></div>
-                        </div>
-                      </td>
-                      <td><span class="badge bg-success">90%</span></td>
-                    </tr>
+                  @foreach($categories as $category)
+                      <tr>
+                          <td class="align-content-center">{{$category->id}}</td>
+                          <td class="align-content-center">{{$category->title}}</td>
+                          <td class="align-content-center">{{$category->slug}}</td>
+                          <td class="align-content-center">
+                              <form method="GET" action="{{route('categories.edit', ['category' => $category->id])}}">
+                                  @csrf
+                                  <button type="submit" class="btn-app bg-primary"><img src="{{asset('assets/img/icon/edit.svg')}}" alt=""></button>
+                              </form>
+                              <form method="POST" action="{{route('categories.destroy', ['category' => $category->id])}}">
+                                  @csrf
+                                  @method('DELETE')
+                                  <button type="submit" class="btn-app bg-danger"><img src="{{asset('assets/img/icon/trash.svg')}}" alt=""></button>
+                              </form>
+                          </td>
+                      </tr>
+                  @endforeach
+
                   </tbody>
                 </table>
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">
-                <ul class="pagination pagination-sm m-0 float-right">
-                  <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                </ul>
-              </div>
+                  {{ $categories->links('pagination::simple-bootstrap-4') }}
             </div>
             <!-- /.card -->
 

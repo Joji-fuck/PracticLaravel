@@ -24,7 +24,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        $categories = Category::all();
+        return view('admin.categories.create', compact('categories'));
     }
 
     /**
@@ -35,12 +36,10 @@ class CategoryController extends Controller
         $request->validate([
             'title'=>'required',
         ]);
-        Category::create($request->all());
-       // $request->session()->flash('success',' Категория добавлена');
+        Category::create([
+            'title'=>$request->title,
+        ]);
         return redirect()->route('categories.index')->with('success',' Категория добавлена');
-        session()->flash('success', 'Запись успешно добавлена!'); 
-        session()->flash('warning', 'Обратите внимание на эту важную информацию!');
-        session()->flash('info', 'Это просто информационное сообщение.'); 
 
     }
 
@@ -57,7 +56,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        dd(__METHOD__);
+        $category = Category::findOrFail($id);
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -66,20 +66,20 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
         ]);
 
         $category->update($request->all());
 
-        return redirect()->route('admin.categories.index')->with('success', 'Категория обновлена!');
+        return redirect()->route('categories.index')->with('success', 'Категория обновлена!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        $category->delete();
-        return redirect()->route('admin.categories.index')->with('success', 'Категория удалена!');
+        Category::destroy($id);
+        return redirect()->route('categories.index')->with('success', 'Категория удалена!');
     }
 }

@@ -13,7 +13,6 @@
   <link rel="stylesheet" href="\assets\css\adminlte.min.css">
 </head>
 <body class="hold-transition sidebar-mini">
-@include('components.alerts')
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
@@ -449,11 +448,12 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-   <div class="content">
+    <div class="content">
+        @extends('components.alerts')
         @yield('content')
-   </div>
+    </div>
 
-  <!-- @yield('content2') -->
+  <!--  -->
 
   <!-- /.content-wrapper -->
 
