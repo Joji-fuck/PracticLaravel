@@ -1,0 +1,99 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Post;
+use App\Models\Tag;
+use Illuminate\Http\Request;
+
+class PostController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $posts = Post::paginate(20);
+        return view('admin.posts.index', compact('posts'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $categories = Category::pluck('title', 'id')->all();
+        $tags = Tag::pluck('title', 'id')->all();
+        return view('admin.posts.create', compact('categories', 'tags'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title'=>'required',
+            'description'=>'required',
+            'content'=>'required',
+            'category_id'=>'required',
+            'tags'=>'required',
+            'yhumbnail'=>'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($request->hasFile('yhumbnail')) {
+            $image_name = time() . '-' .$request->image->extension();
+            $request->yhumbnail->move(public_path('images'), $image_name);
+            $path = 'storage/images/posts/' . $image_name;
+
+            $validatedData['yhumbnail'] = $path;
+        }
+        $validatedData['views'] = 0;
+
+        Post::create($validatedData);
+        return to_route('posts.index', $validatedData) -> with('success', 'Статья успешно создана');
+    }
+
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        return view('admin.posts.edit');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $validatedData = $request->validate([
+            'title'=>'required',
+            'description'=>'required',
+            'content'=>'required',
+            'category_id'=>'required',
+            'tags'=>'required',
+            'yhumbnail'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+}

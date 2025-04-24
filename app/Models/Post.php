@@ -10,6 +10,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 class Post extends Model
 {
     use Sluggable;
+    protected $fillable = ['title', 'slug', 'description', 'content','category_id', 'views', 'yhumbnail'];
 
     public function tags()
     {
