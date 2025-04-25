@@ -57,7 +57,7 @@
                           <td class="align-content-center">{{$post->description}}</td>
                           <td class="align-content-center">{{$post->content}}</td>
                           <td class="align-content-center">{{$post->category->title}}</td>
-{{--                          <td class="align-content-center">{{$post->tags->title}}</td>--}}
+                          <td class="align-content-center">{{$post->tags->pluck('title')->join(', ')}}</td>
                           <td class="align-content-center">{{$post->views}}</td>
                           <td class="align-content-center">
                               <form method="GET" action="{{route('posts.edit', ['post' => $post->id])}}">

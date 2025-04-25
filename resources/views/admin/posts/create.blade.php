@@ -71,12 +71,12 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="thumbnail">Изображение</label>
+                                        <label for="yhumbnail">Изображение</label>
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input type="file" name="thumbnail" id="thumbnail"
+                                                <input type="file" name="yhumbnail" id="yhumbnail"
                                                        class="custom-file-input">
-                                                <label class="custom-file-label" for="thumbnail">Choose file</label>
+                                                <label class="custom-file-label" for="yhumbnail">Choose file</label>
                                             </div>
                                         </div>
                                     </div>
