@@ -38,21 +38,17 @@ class PostController extends Controller
             'title'=>'required',
             'description'=>'required',
             'content'=>'required',
-            'category_id'=>'required',
-            'tags'=>'required',
+            'category_id'=>'required|integer',
             'yhumbnail'=>'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($request->hasFile('yhumbnail')) {
-            $image_name = time() . '-' .$request->image->extension();
-            $request->yhumbnail->move(public_path('images'), $image_name);
-            $path = 'storage/images/posts/' . $image_name;
-
-            $validatedData['yhumbnail'] = $path;
+            $folder = date('Y-m-d');
+            $validatedData['yhumbnail'] = $request->file('yhumbnail')->store("{images/$folder}");
         }
         $validatedData['views'] = 0;
-
-        Post::create($validatedData);
+        $post = Post::create($validatedData);
+        $post->tags()->sync($request->tags);
         return to_route('posts.index', $validatedData) -> with('success', 'Статья успешно создана');
     }
 
