@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use GuzzleHttp\Psr7\Request;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -38,7 +38,7 @@ class Post extends Model
                 Storage::delete($image);
             }
             $folder = date('Y-m-d');
-            return $request -> file('yhumbnail') -> store("images/{$folder}");
+            return $request -> file('yhumbnail') -> store("public/images/{$folder}");
         }
         return null;
     }
