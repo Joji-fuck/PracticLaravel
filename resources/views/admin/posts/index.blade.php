@@ -41,6 +41,9 @@
                       <th style="width: 10px">ID</th>
                       <th>Title</th>
                       <th>Slug</th>
+                      <th>Category</th>
+                      <th>Tags</th>
+                      <th>Create</th>
                       <th style="width: 40px">action</th>
                     </tr>
                   </thead>
@@ -49,6 +52,7 @@
                       <tr>
                           <td class="align-content-center">{{$post->id}}</td>
                           <td class="align-content-center">{{$post->title}}</td>
+                          <td class="align-content-center">{{$post->slug}}</td>
                           <td class="align-content-center">{{$post->category->title}}</td>
                           <td class="align-content-center">{{$post->tags->pluck('title')->join(',')}}</td>
                           <td class="align-content-center">{{$post->created_ad}}</td>
