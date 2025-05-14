@@ -11,7 +11,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::with('category')->orderBy('id','desc')->paginate(2);
-        return view ('posts.layout', compact('posts'));
+        return view ('posts.index', compact('posts'));
     }
 
     public function show($slug)
