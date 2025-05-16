@@ -1,4 +1,4 @@
-<div class="container mt-2">
+
     <div class="row">
         <div class="col-12">
             @if ($errors->any())
@@ -9,4 +9,3 @@
             @endif
         </div>
     </div>
-</div>
