@@ -23,7 +23,7 @@
                         <div class="col-md-4">
                             <div class="post-media">
                                 <a href="{{ route('posts.single', ['slug' => $post->slug]) }}" title="">
-                                    <img src="{{ asset('storage/images/' . substr($post->thumbnail, 7)) }}" alt="" class="img-fluid">
+                                    <img src="{{asset('storage/'.$post->thumbnail)}}" alt="" class="img-fluid">
                                 </a>
                             </div>
                         </div>

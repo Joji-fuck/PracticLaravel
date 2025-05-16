@@ -25,7 +25,7 @@
                         </div><!-- end title -->
 
                         <div class="single-post-media">
-                            <img src="{{ Storage::url('app/') . $post->thumbnail }}" alt="" class="img-fluid">
+                            <img src="{{asset('storage/'.$post->thumbnail)}}" alt="" class="img-fluid">
                         </div><!-- end media -->
 
                         <div class="blog-content">

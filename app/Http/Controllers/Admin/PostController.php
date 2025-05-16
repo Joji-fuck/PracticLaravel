@@ -42,20 +42,7 @@ class PostController extends Controller
             'category_id' => 'required|integer',
             'thumbnail' => 'nullable|image',
         ]);
-         
- 
-        //  if ($request->hasFile('yhumbnail')) {
-        //      $image_name = time() . '-' .$request->image->extension();
-        //      $request->yhumbnail->move(public_path('images'), $image_name);
-        //      $path = 'storage/images/posts/' . $image_name;
- 
-        //      $validatedData['yhumbnail'] = $path;
-        //      $folder = date('Y-m-d');
-        //      $validatedData['yhumbnail'] = $request->file('yhumbnail')->store("{images/$folder}");
-        //  }
          $validatedData['views'] = 0;
- 
-         
          $data = $request->all();
          $data['thumbnail'] = Post::uploadImage($request);
          $post = Post::create($data);
@@ -87,10 +74,10 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-      
+
     $post = Post::findOrFail($id);
 
-    
+
     $request->validate([
         'title'       => 'required',
         'description' => 'required',
@@ -101,25 +88,25 @@ class PostController extends Controller
 
     $data = $request->all();
 
-    
+
     if ($request->hasFile('thumbnail')) {
         $data['thumbnail'] = Post::uploadImage($request, $post->thumbnail);
     } else {
         $data['thumbnail'] = $post->thumbnail;
     }
 
-   
+
     $post->update($data);
 
-   
+
     if ($request->has('tags')) {
         $post->tags()->sync($request->tags);
     }
 
     return redirect()->route('posts.index')->with('success', 'Изменения сохранены');
 }
-    
-    
+
+
 
     /**
      * Remove the specified resource from storage.

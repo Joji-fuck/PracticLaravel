@@ -44,6 +44,7 @@
                       <th>Category</th>
                       <th>Tags</th>
                       <th>Create</th>
+                      <th>Image</th>
                       <th style="width: 40px">action</th>
                     </tr>
                   </thead>
@@ -55,7 +56,8 @@
                           <td class="align-content-center">{{$post->slug}}</td>
                           <td class="align-content-center">{{$post->category->title}}</td>
                           <td class="align-content-center">{{$post->tags->pluck('title')->join(',')}}</td>
-                          <td class="align-content-center">{{$post->created_ad}}</td>
+                          <td class="align-content-center">{{$post->created_at}}</td>
+                          <td class="align-content-center"><img src="{{asset('storage/'.$post->thumbnail)}}" alt="" width="250px" height="auto"></td>
                           <td class="align-content-center">
                               <form method="GET" action="{{route('posts.edit', ['post' => $post->id])}}">
                                   @csrf
