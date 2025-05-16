@@ -16,19 +16,19 @@
         </div><!-- end container -->
     </div><!-- end page-title -->
     <div class="page-wrapper">
-        <div class="blog-custom-build">
+        <div class="">
             @if($posts->count())
                 @foreach($posts as $post)
                     <div class="blog-box row">
                         <div class="col-md-4">
                             <div class="post-media">
                                 <a href="{{ route('posts.single', ['slug' => $post->slug]) }}" title="">
-                                    <img src="{{asset('storage/'.$post->thumbnail)}}" alt="" class="img-fluid">
+                                    <img src="{{asset('storage/'.$post->thumbnail)}}" alt="" >
                                 </a>
                             </div>
                         </div>
 
-                        <div class="blog-meta big-meta col-md-8">
+                        <div class="blog-meta big-meta col-md-8 d-flex flex-column justify-content-center">
                             <h4>
                                 <a href="{{ route('posts.single', ['slug' => $post->slug]) }}" title="">
                                     {{ $post->title }}
@@ -36,14 +36,16 @@
                             </h4>
 
                             <p>{!! Str::limit($post->description, 150) !!}</p>
+                            <div>
+                                <small>
+                                    <a href="{{ route('categories.single', ['slug' => $post->category->slug]) }}" class="bg-yellow">
+                                        {{ $post->category->title }}
+                                    </a>
+                                </small>
+                                <small>{{ $post->created_at->format('d M, Y') }}</small>
+                                <small><i class="fa fa-eye"></i> {{ $post->views }}</small>
+                            </div>
 
-                            <small>
-                                <a href="{{ route('categories.single', ['slug' => $post->category->slug]) }}" class="bg-yellow">
-                                    {{ $post->category->title }}
-                                </a>
-                            </small>
-                            <small>{{ $post->created_at->format('d M, Y') }}</small>
-                            <small><i class="fa fa-eye"></i> {{ $post->views }}</small>
                         </div>
                     </div>
 
